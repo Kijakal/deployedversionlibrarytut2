@@ -1,0 +1,27 @@
+{% extends "catalog/base.html" %}
+{% block content %}
+    <a href="{% url 'author_list' %}">Back</a>
+    <h1>Name: {{ author.first_name }} {{ author.last_name }}</h1>
+    <pre class=tab>
+        Date of Birth:  {{ author.date_of_birth }}  Date of Death:  {{ author.date_of_death }}
+    </pre>
+    <div>
+        {% if author.author_image %}
+            <img style="max-width: 350px; max-height: 350px;" src="{{ author.author_image.url }}">
+        {% endif %}
+    </div>
+
+    <div style="margin-left:20px;margin-top:20px">
+        <h4>Books</h4>
+        {% if author.book_set.exists %}
+            {% for copy in author.book_set.all %}
+                <hr>
+                <p><a href="{{ copy.get_absolute_url }}"> {{ copy.title }}</a></p>
+
+            {% endfor %}
+        {% else %}
+            <hr>
+            <span>No Books Available!</span>
+        {% endif %}
+    </div>
+{% endblock %}
